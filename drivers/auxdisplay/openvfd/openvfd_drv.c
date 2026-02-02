@@ -40,7 +40,7 @@
 #ifdef CONFIG_HAS_EARLYSUSPEND
 #include <linux/earlysuspend.h>
 static struct early_suspend openvfd_early_suspend;
-#elif CONFIG_AMLOGIC_LEGACY_EARLY_SUSPEND
+#elif defined(CONFIG_AMLOGIC_LEGACY_EARLY_SUSPEND)
 #include <linux/amlogic/pm.h>
 static struct early_suspend openvfd_early_suspend;
 #endif
@@ -701,7 +701,7 @@ static int get_chip_pin_number(const unsigned int gpio[])
 	return pin;
 }
 
-int evaluate_pin(const char *name, const unsigned int *vfd_arg, struct vfd_pin *pin, unsigned char enable_skip_evaluation)
+static int evaluate_pin(const char *name, const unsigned int *vfd_arg, struct vfd_pin *pin, unsigned char enable_skip_evaluation)
 {
 	int ret = 0;
 	if (enable_skip_evaluation && vfd_arg[2] == 0xFF) {
@@ -799,7 +799,7 @@ static int verify_module_params(struct vfd_dev *dev)
 	return ret >= 0;
 }
 
-void get_pin_from_dt(const char *name, const struct platform_device *pdev, struct vfd_pin *pin)
+static void get_pin_from_dt(const char *name, const struct platform_device *pdev, struct vfd_pin *pin)
 {
 	if (of_find_property(pdev->dev.of_node, name, NULL)) {
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(6,3,0))
@@ -815,7 +815,7 @@ void get_pin_from_dt(const char *name, const struct platform_device *pdev, struc
 	}
 }
 
-int request_pin(const char *name, struct vfd_pin *pin, unsigned char enable_skip)
+static int request_pin(const char *name, struct vfd_pin *pin, unsigned char enable_skip)
 {
 	int ret = 0;
 	pin->flags.bits.is_requested = 0;
