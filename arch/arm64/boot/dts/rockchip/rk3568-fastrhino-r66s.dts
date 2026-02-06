@@ -3,8 +3,8 @@
 #include "rk3568-fastrhino-r66s.dtsi"
 
 / {
-	model = "Lunzn FastRhino R66S";
-	compatible = "lunzn,fastrhino-r66s", "rockchip,rk3568";
+	model = "FastRhino R66S";
+	compatible = "fastrhino,r66s", "rockchip,rk3568";
 
 	aliases {
 		mmc0 = &sdmmc0;
@@ -19,6 +19,7 @@
 	bus-width = <4>;
 	cap-mmc-highspeed;
 	cap-sd-highspeed;
+	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
 	disable-wp;
 	no-sdio;
 	no-mmc;
@@ -28,4 +29,12 @@
 	vmmc-supply = <&vcc3v3_sd>;
 	vqmmc-supply = <&vccio_sd>;
 	status = "okay";
+};
+
+&rtl8125_1 {
+	label = "eth0";
+};
+
+&rtl8125_2 {
+	label = "eth1";
 };
